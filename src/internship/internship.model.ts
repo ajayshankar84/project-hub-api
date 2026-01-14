@@ -1,0 +1,25 @@
+
+import * as mongoose from 'mongoose';
+
+export const InternshipSchema = new mongoose.Schema({
+  name: { type: String, required: true, minlength: 3 },
+  email: { type: String, required: true, minlength: 3 },
+  program: { type: String, required: true, minlength: 3 },
+  college: { type: String, required: true, minlength: 3 },
+  mobile: { type: String, required: true, minlength: 10,maxLength:10 },
+  internshipType: { type: String, required: true, minlength: 3 },
+  active: { type: Boolean, required: true, default: true },
+  createdAt: { type: Date, default: Date.now },
+  
+});
+
+export interface InternshipModel extends mongoose.Document {
+  name: string;
+  email: string;
+  program: string; 
+  college: string;
+  mobile: string;
+  internshipType: string;
+  active: boolean;
+  createdAt: Date;  
+}
