@@ -23,11 +23,11 @@ export class JobService {
         return job;
     }
     // Save job data and the image path to MongoDB
-    async create(jobData: any, imagePath: string): Promise<JobModel> {
-        const createdjob = new this.jobModel({
-            ...jobData,
-            imagePath: imagePath, // Store the local path or URL
+    async create(jobData: any): Promise<JobModel> {
+        console.log('job service:');
+        const createdJob = new this.jobModel({
+            ...jobData
         });
-        return await createdjob.save();
+        return await createdJob.save();
     }
 }

@@ -8,6 +8,7 @@ export class InternshipController {
 
   @Get()
   async getAllInternships() {
+    console.log('Fetching all internships');
     return await this.internshipService.findAll();
   }
 

@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CourseModule } from './course/course.module';
-import { JobModule } from 'dist/job/job.module';
+import { JobModule } from './job/job.module';
 import { InternshipModule } from './internship/internship.module';
 
 const DB_USER = 'user-admin';
