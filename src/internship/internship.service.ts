@@ -11,7 +11,10 @@ export class InternshipService {
 
     // Fetch all internships
     async findAll(): Promise<InternshipModel[]> {
-        return await this.internshipModel.find().exec();
+        return await this.internshipModel
+            .find()
+            .sort({ createdAt: -1 }) // Use 'desc' or -1 for descending order
+            .exec();
     }
 
     // Fetch a single internship by ID
@@ -26,8 +29,28 @@ export class InternshipService {
     async create(internshipData: any): Promise<InternshipModel> {
         const createdInternship = new this.internshipModel({
             ...internshipData,
-           // Store the local path or URL
+            // Store the local path or URL
         });
         return await createdInternship.save();
+    }
+
+    async update(id: string, internshipData: any): Promise<InternshipModel> {
+        const updatedInternship = await this.internshipModel
+            .findByIdAndUpdate(id, internshipData, { new: true }) // { new: true } returns the modified document
+            .exec();
+
+        if (!updatedInternship) {
+            throw new NotFoundException(`Internship with ID ${id} not found`);
+        }
+        return updatedInternship;
+    }
+
+    // Delete an internship
+    async remove(id: string): Promise<any> {
+        const result = await this.internshipModel.findByIdAndDelete(id).exec();
+        if (!result) {
+            throw new NotFoundException(`Internship with ID ${id} not found`);
+        }
+        return { deleted: true };
     }
 }

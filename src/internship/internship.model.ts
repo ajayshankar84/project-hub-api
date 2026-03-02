@@ -12,6 +12,9 @@ export const InternshipSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   referralName: { type: String, required: false, minlength: 3 },
   referralMobile: { type: String, required: false, minlength: 10, maxLength: 10 },
+  total: { type: Number, required: false, default: 0 },
+  paid: { type: Number, required: false, default: 0 },
+  balance: { type: Number, required: false, default: 0 },
 });
 
 export interface InternshipModel extends mongoose.Document {
@@ -25,4 +28,7 @@ export interface InternshipModel extends mongoose.Document {
   createdAt: Date;
   referralName: string;
   referralMobile: string;
+  total: number;
+  paid: number;
+  balance: number;
 }
