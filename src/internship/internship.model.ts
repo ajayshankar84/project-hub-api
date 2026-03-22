@@ -15,6 +15,9 @@ export const InternshipSchema = new mongoose.Schema({
   total: { type: Number, required: false, default: 0 },
   paid: { type: Number, required: false, default: 0 },
   balance: { type: Number, required: false, default: 0 },
+   city:  { type: String, required: false },
+  comment:  { type: String, required: false },
+  yearsOfStudy:  { type: String, required: false },
 });
 
 export interface InternshipModel extends mongoose.Document {
@@ -31,4 +34,7 @@ export interface InternshipModel extends mongoose.Document {
   total: number;
   paid: number;
   balance: number;
+  city: string;
+  comment: string;
+  yearsOfStudy: string;
 }
