@@ -8,14 +8,14 @@ import { InternshipModule } from './internship/internship.module';
 
 const DB_USER = 'user-admin';
 const PASSWORD = encodeURIComponent('abcd123%40');
-const DB_URL = `mongodb://user-admin:a78787kjasyd89yasasdas12nkdjaklsdj8@157.20.214.72:19925/users?authSource=users`;
+const DB_URL = `mongodb://user-admin:a78787kjasyd89yasasdas12nkdjaklsdj8@localhost:19925/users?authSource=admin`;
 @Module({
-    imports: [
+  imports: [
     MongooseModule.forRoot(
       DB_URL
     ),
-    
-    CourseModule ,JobModule, InternshipModule
+
+    CourseModule, JobModule, InternshipModule
   ],
   controllers: [AppController],
   providers: [AppService],

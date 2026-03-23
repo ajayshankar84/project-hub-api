@@ -12,10 +12,10 @@ import { join } from 'path';
 async function bootstrap() {
 
   const server = express();
-  const app = await NestFactory.create(AppModule, 
+  const app = await NestFactory.create(AppModule,
     new ExpressAdapter(server),
   );
- // 2. Configure static assets
+  // 2. Configure static assets
   // This maps http://localhost:3000/uploads to the physical ./uploads folder
   server.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
   app.use(bodyParser.json({ limit: '50mb' }));
@@ -23,7 +23,5 @@ async function bootstrap() {
   app.enableCors({ credentials: true, origin: "*" });
   await app.init();
   http.createServer(server).listen(process.env.PORT || 3000);
- 
-  //await app.listen(3000);
 }
 bootstrap();
