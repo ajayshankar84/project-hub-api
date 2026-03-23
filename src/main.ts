@@ -9,6 +9,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { join } from 'path';
+
+require('dotenv').config();
+
 async function bootstrap() {
 
   const server = express();
@@ -23,5 +26,7 @@ async function bootstrap() {
   app.enableCors({ credentials: true, origin: "*" });
   await app.init();
   http.createServer(server).listen(process.env.PORT || 3000);
+
+  //await app.listen(3000);
 }
 bootstrap();
