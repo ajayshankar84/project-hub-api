@@ -26,7 +26,8 @@ export const CourseSchema = new mongoose.Schema({
   rating: { type: Number, required: true, min: 1, max: 5 },
   imagePath: { type: String, required: true }, // Stores the file path/URL of the uploaded image
   active: { type: Boolean, required: true, default: true },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  isPaid: { type: Boolean, required: false, default: false }
 });
 
 export interface CourseModel extends mongoose.Document {
@@ -43,4 +44,5 @@ export interface CourseModel extends mongoose.Document {
   imagePath: string;
   active: boolean;
   createdAt: Date;
+  isPaid: boolean;
 }
