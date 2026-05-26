@@ -7,13 +7,13 @@ import { FindAssignedCourseByMobileDto } from './dto/find-assigned-course-by-mob
 export class AssignedCourseController {
   constructor(private readonly assignedCourseService: AssignedCourseService) {}
 
-  @Post('list')
+  @Get()
   async getAllAssignedCourses() {
     return await this.assignedCourseService.findAllPost();
   }
 
-  @Get(':by-id')
-  async getAssignedCourse(@Param('by-id') id: string) {
+  @Get(':id')
+  async getAssignedCourse(@Param('id') id: string) {
     return await this.assignedCourseService.findOne(id);
   }
 
@@ -22,8 +22,8 @@ export class AssignedCourseController {
     return await this.assignedCourseService.createMany(createAssignedCourseDtos);
   }
 
-  @Get(':by-mobile')
-  async getAssignedCoursesByMobile(@Param('by-mobile') byMobile: string) {
+  @Get('mobile/:mobile')
+  async getAssignedCoursesByMobile(@Param('mobile') byMobile: string) {
     return await this.assignedCourseService.findByMobile(byMobile);
   }
 

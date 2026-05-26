@@ -11,5 +11,6 @@ import { AssignedCourseSchema } from './assigned-course.model'; // Import your s
   ],
   controllers: [AssignedCourseController],
   providers: [AssignedCourseService],
+  exports: [AssignedCourseService],
 })
 export class AssignedCourseModule {}

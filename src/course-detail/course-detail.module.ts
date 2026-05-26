@@ -11,5 +11,6 @@ import { CourseDetailSchema } from './course-detail.model'; // Import your schem
   ],
   controllers: [CourseDetailController],
   providers: [CourseDetailService],
+  exports: [CourseDetailService],
 })
 export class CourseDetailModule {}

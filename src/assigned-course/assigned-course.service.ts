@@ -52,4 +52,35 @@ export class AssignedCourseService {
             throw new InternalServerErrorException('Failed to create assigned courses');
         }
     }
+
+    async create(data: any): Promise<AssignedCourseModel> {
+        try {
+            const createdDoc = new this.assignedCourseModel(data);
+            return await createdDoc.save();
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                console.error('AssignedCourse Validation Error:', error.errors);
+            }
+            console.error('Error creating AssignedCourse:', error);
+            throw new InternalServerErrorException('Failed to create assigned course');
+        }
+    }
+
+    async updateManyByCourseId(courseId: string, updateData: any): Promise<any> {
+        try {
+            return await this.assignedCourseModel.updateMany({ courseId }, { $set: updateData }).exec();
+        } catch (error) {
+            console.error('Error updating multiple AssignedCourses:', error);
+            throw new InternalServerErrorException('Failed to update assigned courses');
+        }
+    }
+
+    async removeByCourseId(courseId: string): Promise<any> {
+        try {
+            const result = await this.assignedCourseModel.deleteMany({ courseId }).exec();
+            return result;
+        } catch (error) {
+            throw new InternalServerErrorException('Failed to delete assigned courses by course ID');
+        }
+    }
 }

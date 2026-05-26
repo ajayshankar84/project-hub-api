@@ -24,6 +24,20 @@ export class CourseDetailService {
     }
   }
 
+  async create(data: any): Promise<CourseDetailModel> {
+    try {
+      const createdDoc = new this.courseDetailModel(data);
+      return await createdDoc.save();
+    } catch (error) {
+      // Log the actual Mongoose validation error to the console
+      if (error.name === 'ValidationError') {
+        console.error('Mongoose Validation Error details:', error.errors);
+      }
+      console.error('Error creating CourseDetail:', error);
+      throw new InternalServerErrorException('Failed to create course detail');
+    }
+  }
+
   async update(courseId: string, updateData: any): Promise<CourseDetailModel> {
     try {
       const updatedDoc = await this.courseDetailModel
@@ -38,6 +52,16 @@ export class CourseDetailService {
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to update course detail');
+    }
+  }
+
+  async removeByCourseId(courseId: string): Promise<any> {
+    try {
+      const result = await this.courseDetailModel.findOneAndDelete({ courseId }).exec();
+      console.log(`Deleted CourseDetail for courseId: ${courseId}`);
+      return result;
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to delete course detail');
     }
   }
 }

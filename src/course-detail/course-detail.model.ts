@@ -17,37 +17,39 @@ export const CourseDetailSchema = new mongoose.Schema({
   rating: { type: Number, required: true, min: 1, max: 5 },
   imagePath: { type: String, required: true },
   active: { type: Boolean, required: true, default: true },
+
   createdAt: { type: Date, default: Date.now },
+  courseId: { type: String, required: false },
 
-  courseId: { type: String, required: true },
-  pageTitle: { type: String, required: true },
-  pageSubTitle: { type: String, required: true },
+
+  pageTitle: { type: String, required: false },
+  pageSubTitle: { type: String, required: false },
   
 
-  duration: { type: String, required: true },
-  stipend: { type: String, required: true },
-  location: { type: String, required: true },
+  duration: { type: String, required: false },
+  stipend: { type: String, required: false },
+  location: { type: String, required: false },
 
-  whatYouWillLearn: { type: Array, required: true },
-  handsOnProjects: { type: Array, required: true },
-  mentorshipAndAssessment: { type: Array, required: true },
-  openPositions: { type: Object, required: true },
+  whatYouWillLearn: { type: Array, required: false },
+  handsOnProjects: { type: Array, required: false },
+  mentorshipAndAssessment: { type: Array, required: false },
+  openPositions: { type: Object, required: false },
   
-  weeklyCommitment: { type: String, required: true },
-  startDate: { type: String, required: true },
+  weeklyCommitment: { type: String, required: false },
+  startDate: { type: String, required: false },
   
-  eligibility: { type: Array, required: true },
-  timeline: { type: Array, required: true },
-  curriculum: { type: Array, required: true },
-  faq: { type: Array, required: true },
-  evaluation: { type: Object, required: true },
-  perksAndBenefits: { type: Array, required: true },
+  eligibility: { type: Array, required: false },
+  timeline: { type: Array, required: false },
+  curriculum: { type: Array, required: false },
+  faq: { type: Array, required: false },
+  evaluation: { type: Object, required: false },
+  perksAndBenefits: { type: Array, required: false },
 
 });
 
 export interface CourseDetailModel extends mongoose.Document {
   name: string;
-  type: 'basic' | 'intermediate' | 'advance';
+  type: string;
   category: string;
   description: string;
   tag: string;
