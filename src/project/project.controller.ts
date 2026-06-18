@@ -1,17 +1,17 @@
 import { Controller, Get, Param, Post, Patch, Delete, Query, ParseIntPipe, Body } from '@nestjs/common';
-import { CustomerService } from './customer.service';
+import { ProjectService } from './project.service';
 import { Public } from '../auth/public.decorator';
 
 
-@Controller('customer')
-export class CustomerController {
-  constructor(private readonly customerService: CustomerService) { }
+@Controller('project')
+export class ProjectController {
+  constructor(private readonly projectService: ProjectService) { }
 
   @Get()
   
   async findAll() {
-    console.log('Customer') 
-    return this.customerService.findAll();
+    console.log('Project') 
+    return this.projectService.findAll();
   }
 
   @Post()
@@ -19,7 +19,7 @@ export class CustomerController {
   async create(
     @Body() createData: any
   ) {
-    return this.customerService.create(createData);
+    return this.projectService.create(createData);
   }
 
   @Patch(':id')
@@ -28,13 +28,13 @@ export class CustomerController {
     @Param('id') id: string,
     @Body() updateData: any
   ) {
-    return this.customerService.update(id, updateData);
+    return this.projectService.update(id, updateData);
   }
 
   @Delete(':id')
   
   async remove(@Param('id') id: string) {
-    return await this.customerService.remove(id);
+    return await this.projectService.remove(id);
   }
 
   @Get('paged/:page/:limit')
@@ -49,25 +49,34 @@ export class CustomerController {
     // The service layer handles defaults for these if they are undefined.
     const { search, sortBy, sortDir, status, ...filters } = query || {};
     
-    return this.customerService.findPaged(page, limit, search, sortBy, sortDir, status, filters);
-  }
-
-  @Get('stats/customer-growth')
-  
-  async getCustomerGrowth() {
-    return this.customerService.getCustomerGrowth();
-  }
+    return this.projectService.findPaged(page, limit, search, sortBy, sortDir, status, filters);
+  } 
 
   @Get(':id')
   
   async findOne(@Param('id') id: string) {
-    return await this.customerService.findOne(id);
+    return await this.projectService.findOne(id);
   }
 
   @Get('mobile/:mobile')
   
   async findByMobile(@Param('mobile') mobile: string) {
-    return await this.customerService.findByMobile(mobile);
+    return await this.projectService.findByMobile(mobile);
+  }
+
+  @Get('customer/:customerId')
+  
+  async findByCustomerId(@Param('customerId') customerId: string) {
+    return await this.projectService.findByCustomerId(customerId);
+  }
+
+  @Patch(':id/status')
+  
+  async updateStatus(
+    @Param('id') id: string,
+    @Body('status') status: string // Expecting a body like { "status": "newStatusValue" }
+  ) {
+    return this.projectService.updateProjectStatus(id, status);
   }
 
 }

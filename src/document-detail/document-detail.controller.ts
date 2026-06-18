@@ -24,19 +24,19 @@ export class DocumentDetailController {
     constructor(private readonly documentDetailService: DocumentDetailService) { }
 
     @Get()
-    @Public()
+    
     async findAll() {
         return this.documentDetailService.findAll();
     }
 
     @Get('customer/:customerId')
-    @Public()
+    
     async findByCustomerId(@Param('customerId') customerId: string) {
         return this.documentDetailService.findByCustomerId(customerId);
     }
 
     @Get('customer/:customerId/:page/:limit')
-    @Public()
+    
     async findPagedByCustomerId(
         @Param('customerId') customerId: string,
         @Param('page', ParseIntPipe) page: number,
@@ -46,33 +46,33 @@ export class DocumentDetailController {
     }
 
     @Get(':id')
-    @Public()
+    
     async findOne(@Param('id') id: string) {
         return this.documentDetailService.findOne(id);
     }
 
     @Post()
-    @Public()
+    
     @UseInterceptors(FileInterceptor('file', uploadConfig))
     async create(@Body() data: CreateDocumentDetailDto, @UploadedFile() file: Express.Multer.File) {
         return this.documentDetailService.create(data, file);
     }
 
     @Patch(':id')
-    @Public()
+    
     @UseInterceptors(FileInterceptor('file', uploadConfig))
     async update(@Param('id') id: string, @Body() data: Partial<CreateDocumentDetailDto>, @UploadedFile() file: Express.Multer.File) {
         return this.documentDetailService.update(id, data, file);
     }
 
     @Put(':id/status')
-    @Public()
+    
     async updateStatus(@Param('id') id: string, @Body('status') status: string) {
         return this.documentDetailService.updateStatus(id, status);
     }
 
     @Delete(':id')
-    @Public()
+    
     async remove(@Param('id') id: string) {
         return this.documentDetailService.remove(id);
     }

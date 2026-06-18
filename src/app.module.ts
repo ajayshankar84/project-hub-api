@@ -8,6 +8,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { CustomerModule } from './customer/customer.module';
 import { DocumentDetailModule } from './document-detail/document-detail.module';
 import { MessageModule } from './message/message.module';
+import { ProjectModule } from './project/project.module';
 require('dotenv').config();
 
 const DB_URL = process.env.DB
@@ -24,7 +25,7 @@ console.log(DB_URL);
         dbName: 'insuranceDB',
       }
     ),
-    AuthModule, CustomerModule, DocumentDetailModule, MessageModule
+    AuthModule, CustomerModule, DocumentDetailModule, MessageModule, ProjectModule
   ],
   controllers: [AppController],
   providers: [
