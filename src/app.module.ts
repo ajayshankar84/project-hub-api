@@ -9,6 +9,7 @@ import { CustomerModule } from './customer/customer.module';
 import { DocumentDetailModule } from './document-detail/document-detail.module';
 import { MessageModule } from './message/message.module';
 import { ProjectModule } from './project/project.module';
+import { ProjectDateModule } from './project-date/project-date.module';
 require('dotenv').config();
 
 const DB_URL = process.env.DB
@@ -25,7 +26,7 @@ console.log(DB_URL);
         dbName: 'insuranceDB',
       }
     ),
-    AuthModule, CustomerModule, DocumentDetailModule, MessageModule, ProjectModule
+    AuthModule, CustomerModule, DocumentDetailModule, MessageModule, ProjectModule, ProjectDateModule
   ],
   controllers: [AppController],
   providers: [
