@@ -7,6 +7,11 @@ import { Public } from '../auth/public.decorator';
 export class ProjectDateController {
   constructor(private readonly projectDateService: ProjectDateService) { }
 
+  @Get()
+  async findAll() {
+    return this.projectDateService.findAll();
+  }
+
   @Post()
   
   async create(

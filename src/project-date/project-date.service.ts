@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ClientSession } from 'mongoose';
 import { subMonths, startOfMonth, endOfMonth, startOfDay, format } from 'date-fns';
@@ -7,12 +7,17 @@ import { ProjectDateModel } from './project-date.model'; // Based on updated mod
 @Injectable()
 export class ProjectDateService {
     constructor(
-        @InjectModel('ProjectDate') private readonly projectDateModel: Model<ProjectDateModel>
+            @InjectModel('ProjectDate') private readonly projectDateModel: Model<any>
     ) { }
 
     // Create a new project date record
     async create(data: any, session?: ClientSession): Promise<ProjectDateModel> {
         const newRecord = new this.projectDateModel({ ...data });
         return await newRecord.save({ session });
+    }
+
+    // Fetch all project date records
+    async findAll(): Promise<ProjectDateModel[]> {
+        return await this.projectDateModel.find().exec();
     }
 }
