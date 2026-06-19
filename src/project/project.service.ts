@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel, InjectConnection } from '@nestjs/mongoose';
+import { Model, Connection } from 'mongoose';
 import { subMonths, startOfMonth, endOfMonth, startOfDay, format } from 'date-fns';
 import { ProjectModel } from './project.model'; // Based on updated model
+import { ProjectDateService } from '../project-date/project-date.service';
 
 @Injectable()
 export class ProjectService {
     constructor(
-        @InjectModel('Project') private readonly projectModel: Model<ProjectModel>
+        @InjectModel('Project') private readonly projectModel: Model<ProjectModel>,
+        @InjectConnection() private readonly connection: Connection,
+        private readonly projectDateService: ProjectDateService,
     ) { }
 
     // Fetch all insurance records
@@ -114,10 +117,32 @@ export class ProjectService {
 
     // Update the status of an existing project
     async updateProjectStatus(id: string, status: string): Promise<ProjectModel> {
-        const updated = await this.projectModel.findByIdAndUpdate(id, { status }, { new: true }).exec();
-        if (!updated) {
-            throw new NotFoundException(`Project with ID ${id} not found`);
+        const session = await this.connection.startSession();
+        session.startTransaction();
+        try {
+            const updated = await this.projectModel
+                .findByIdAndUpdate(id, { status }, { new: true })
+                .session(session)
+                .exec();
+
+            if (!updated) {
+                throw new NotFoundException(`Project with ID ${id} not found`);
+            }
+
+            // Log the status change history
+            await this.projectDateService.create({
+                projectId: id,
+                status: status,
+                updateAt: new Date(),
+            }, session);
+
+            await session.commitTransaction();
+            return updated;
+        } catch (error) {
+            await session.abortTransaction();
+            throw error;
+        } finally {
+            session.endSession();
         }
-        return updated;
     }
 }

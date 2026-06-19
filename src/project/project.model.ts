@@ -8,6 +8,7 @@ export const ProjectSchema = new mongoose.Schema({
   status: { type: String, required: true, default: 'pending' },
   createdAt: { type: Date, default: Date.now, index: true },
   dueDate: { type: Date, default: Date.now, index: true },
+  cost: { type: Number, required: false, min: 0 }
 
 });
 
@@ -18,6 +19,6 @@ export interface ProjectModel extends mongoose.Document {
   status: string;
   createdAt: Date;
   dueDate: Date;
-
+  cost: number;
 
 }

@@ -11,5 +11,6 @@ import { ProjectDateSchema } from './project-date.model'
   ],
   controllers: [ProjectDateController],
   providers: [ProjectDateService],
+  exports: [ProjectDateService],
 })
 export class ProjectDateModule {}
