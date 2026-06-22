@@ -12,6 +12,17 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) { }
 
+    private normalizeAdminFields(userData: any) {
+        if (userData?.role !== 'admin') {
+            return userData;
+        }
+
+        return {
+            ...userData,
+            company: Array.isArray(userData.company) ? userData.company : [],
+        };
+    }
+
     // Fetch all internships
     async findAll(): Promise<AuthModel[]> {
         return await this.lmsAuthModel
@@ -45,7 +56,7 @@ export class AuthService {
     // Save internship data and the image path to MongoDB
     async create(internshipData: any): Promise<AuthModel> {
         const createdLMSAuth = new this.lmsAuthModel({
-            ...internshipData,
+            ...this.normalizeAdminFields(internshipData),
             // Store the local path or URL
         });
         return await createdLMSAuth.save();
@@ -78,15 +89,16 @@ export class AuthService {
                 mobile: user.mobile,
                 role: user.role,
                 isLoggedIn: true,
-                ...(user.role === 'admin' ? { address: user.address, gstNo: user.gstNo } : {}),
+                ...(user.role === 'admin' ? { address: user.address, gstNo: user.gstNo, company: user.company ?? [] } : {}),
             },
             access_token,
         };
     }
 
     async update(id: string, internshipData: any): Promise<AuthModel> {
+        console.log('Updating internship with ID:', id, 'Data:', internshipData);
         const updatedLMSAuth = await this.lmsAuthModel
-            .findByIdAndUpdate(id, internshipData, { new: true }) // { new: true } returns the modified document
+            .findByIdAndUpdate(id, this.normalizeAdminFields(internshipData), { new: true }) // { new: true } returns the modified document
             .exec();
 
         if (!updatedLMSAuth) {
