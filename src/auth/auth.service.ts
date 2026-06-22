@@ -78,6 +78,7 @@ export class AuthService {
                 mobile: user.mobile,
                 role: user.role,
                 isLoggedIn: true,
+                ...(user.role === 'admin' ? { address: user.address, gstNo: user.gstNo } : {}),
             },
             access_token,
         };

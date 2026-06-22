@@ -23,7 +23,8 @@ export const AuthSchema = new mongoose.Schema({
   city: { type: String, required: false },
   comment: { type: String, required: false },
   yearsOfStudy: { type: String, required: false },
-
+  address: { type: String, required: false },
+  gstNo: { type: String, required: false },
 });
 
 export interface AuthModel extends mongoose.Document {
@@ -46,4 +47,6 @@ export interface AuthModel extends mongoose.Document {
   yearsOfStudy: string;
   password: string;
   role: 'admin' | 'user';
+  address: string;
+  gstNo: string;
 }
