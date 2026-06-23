@@ -11,6 +11,7 @@ import { MessageModule } from './message/message.module';
 import { ProjectModule } from './project/project.module';
 import { ProjectDateModule } from './project-date/project-date.module';
 import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
+import { TicketModule } from './ticket/ticket.module';
 require('dotenv').config();
 
 const DB_URL = process.env.DB
@@ -27,7 +28,7 @@ console.log(DB_URL);
         dbName: 'insuranceDB',
       }
     ),
-    AuthModule, CustomerModule, DocumentDetailModule, MessageModule, ProjectModule, ProjectDateModule, InvoiceDetailModule
+    AuthModule, CustomerModule, DocumentDetailModule, MessageModule, ProjectModule, ProjectDateModule, InvoiceDetailModule, TicketModule
   ],
   controllers: [AppController],
   providers: [

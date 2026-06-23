@@ -17,6 +17,7 @@ export const CustomerSchema = new mongoose.Schema({
   ifscCode: { type: String, required: false },
   branchName: { type: String, required: false },
   gstNo: { type: String, required: false },
+  category: { type: String, required: false },
 });
 
 export interface CustomerModel extends mongoose.Document {
@@ -35,4 +36,5 @@ export interface CustomerModel extends mongoose.Document {
   ifscCode: string;
   branchName: string;
   gstNo:string;
+  category: string;
 }
