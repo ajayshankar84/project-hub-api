@@ -4,6 +4,7 @@ import { Public } from '../auth/public.decorator';
 
 
 @Controller('ticket')
+@Public()
 export class TicketController {
   constructor(private readonly ticketService: TicketService) { }
 
